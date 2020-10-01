@@ -13,6 +13,11 @@ module Pdfco
         @headers = headers
       end
 
+      # Simple predicate method to check if there is any error
+      def error?
+        (@body && @body["error"])
+      end
+
     end
 
   end

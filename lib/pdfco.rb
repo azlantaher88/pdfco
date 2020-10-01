@@ -2,6 +2,7 @@ require_relative "pdfco/version"
 require_relative "pdfco/pdf_file"
 
 require_relative 'pdfco/http_service'
+require_relative 'pdfco/errors'
 
 # miscellaneous
 require_relative 'pdfco/utils'

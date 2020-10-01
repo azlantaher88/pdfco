@@ -39,8 +39,13 @@ module Pdfco
         Pdfco::Utils.debug "\nPdfco [#{verb.upcase}] - #{server(options) + path} params: #{args.inspect} : #{response.status}\n"
         Pdfco::Utils.debug "\nPdfco response:#{response.inspect}\n"
 
-        Pdfco::HTTPService::Response.new(response.status.to_i, response.body, response.headers)
+        response = Pdfco::HTTPService::Response.new(response.status.to_i, response.body, response.headers)
 
+        if response.error?
+          Pdfco::APIError.new(response.status, response.body)
+        else
+          return response.body
+        end
       end
 
 
