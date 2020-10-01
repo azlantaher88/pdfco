@@ -2,14 +2,14 @@ require './test/test_helper'
 
 class PdfcoFileTest < Minitest::Test
   def test_exists
-    assert Pdfco::File
+    assert Pdfco::PdfFile
 
   end
 
   def test_it_gives_back_a_single_file
-    VCR.use_cassette('one_file') do
-      file = Pdfco::File.by_name('test.pdf')
-      assert_equal Pdfco::File, file.class
+    VCR.use_cassette('one_file', :match_requests_on => [:method, :uri]) do
+      file = Pdfco::PdfFile.by_name('test.pdf')
+      assert_equal Pdfco::PdfFile, file.class
 
       # Check that the fields are accessible by our model
       assert_equal file.presigned_url, "https://pdf-temp-files.s3-us-west-2.amazonaws.com/4ec6c4b287c9480998a89fc2daf2fb35/test.pdf?X-Amz-Expires=900&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIZJDPLX6D7EHVCKA/20200930/us-west-2/s3/aws4_request&X-Amz-Date=20200930T220138Z&X-Amz-SignedHeaders=host&X-Amz-Signature=2e79c3da97aa714bed4bc07ee86310b08064c637326dfbb2de25beff6e9748f4"
