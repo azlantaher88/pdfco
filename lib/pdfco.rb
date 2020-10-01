@@ -1,5 +1,5 @@
 require_relative "pdfco/version"
-require_relative "pdfco/file"
+require_relative "pdfco/pdf_file"
 
 require_relative 'pdfco/http_service'
 

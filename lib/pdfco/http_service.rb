@@ -15,7 +15,7 @@ module Pdfco
       #
       # @return a complete server address with protocol
       def server(options = {})
-        "#{options[:use_ssl] ? "https" : "http"}://#{API_SERVER}"
+        "https://#{API_SERVER}"
       end
 
 
@@ -37,6 +37,7 @@ module Pdfco
 
         # Log URL and params information
         Pdfco::Utils.debug "\nPdfco [#{verb.upcase}] - #{server(options) + path} params: #{args.inspect} : #{response.status}\n"
+        Pdfco::Utils.debug "\nPdfco response:#{response.inspect}\n"
 
         Pdfco::HTTPService::Response.new(response.status.to_i, response.body, response.headers)
 

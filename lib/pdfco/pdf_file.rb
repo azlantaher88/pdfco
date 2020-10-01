@@ -3,7 +3,7 @@ require 'json'
 
 module Pdfco
 
-  class File
+  class PdfFile
 
     attr_reader :name, :url, :presigned_url
 
@@ -16,7 +16,7 @@ module Pdfco
     def self.by_name(name, args={})
       args.merge!({name: name})
       attributes = services('/file/upload/get-presigned-url', args)
-      new(attributes)
+      new(attributes.body)
     end
 
     private
