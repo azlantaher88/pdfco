@@ -22,7 +22,9 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+To start using it after installation you will need to run the following and supply your x-api-key in config/initializers/pdfco.rb
+    
+    $ rails g pdfco:initialize
 
 ## Development
 
