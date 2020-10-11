@@ -1,7 +1,5 @@
 require_relative "pdfco/version"
-require_relative "pdfco/pdf_file"
-require_relative "pdfco/document_parser"
-require_relative "pdfco/converter"
+require_relative "pdfco/server"
 
 require_relative 'pdfco/http_service'
 require_relative 'pdfco/errors'
