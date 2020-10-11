@@ -32,8 +32,12 @@ module Pdfco
         # figure out our options for this request
         request_options = {:params => (verb == :get ? args : {})}
         # set up our Faraday connection
-        conn = Faraday.new(server(options), request_options)
-        response = conn.send(verb, path, (verb == :post ? args : {}))
+        conn = Faraday.new(server(options), request_options) do |f|
+          f.request :multipart
+          f.request :url_encoded
+          f.adapter :net_http
+        end
+        response = conn.send(verb, server + path, (verb == :post ? args : {}))
 
         # Log URL and params information
         Pdfco::Utils.debug "\nPdfco [#{verb.upcase}] - #{server(options) + path} params: #{args.inspect} : #{response.status}\n"
@@ -44,7 +48,7 @@ module Pdfco
         if response.error?
           Pdfco::APIError.new(response.status, response.body)
         else
-          return response.body
+          response.body
         end
       end
 
