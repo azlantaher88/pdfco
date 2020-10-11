@@ -5,6 +5,13 @@ module Pdfco
 
   class Server
 
+    def self.method_missing(method, *args, &block)
+      endpoint = method.to_s.gsub('_', '/')
+      self.request(endpoint, *args, &block)
+    end
+
+    private
+
     def self.request(endpoint_url= nil, params= {}, method_verb= :post)
       if endpoint_url == "/file/upload" && params[:file]
         params = { file: Faraday::UploadIO.new(params[:file], '*/*') }
@@ -16,9 +23,8 @@ module Pdfco
       services(endpoint_url, params, method_verb)
     end
 
-    private
 
-    def self.services(path, args, method=:get)
+    def self.services(path, args, method=:post)
       HTTPService.make_request(path, args, method)
     end
   end
