@@ -48,7 +48,7 @@ module Pdfco
         if response.error?
           Pdfco::APIError.new(response.status, response.body)
         else
-          response.body
+          return response.body
         end
       end
 
