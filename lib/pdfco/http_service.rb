@@ -46,9 +46,18 @@ module Pdfco
         response = Pdfco::HTTPService::Response.new(response.status.to_i, response.body, response.headers)
 
         if response.error?
-          Pdfco::APIError.new(response.status, response.body)
+          case response.status
+          when 401
+            Pdfco::UnAuthorizedError.new(response)
+          when 400
+            Pdfco::BadInputError.new(response)
+          when 404
+            Pdfco::MethodNotFoundError.new(response)
+          else
+            Pdfco::PdfcoError.new(response)
+          end
         else
-          return response.body
+          response.body
         end
       end
 

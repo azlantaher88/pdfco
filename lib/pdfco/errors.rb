@@ -1,20 +1,17 @@
 module Pdfco
 
-  class PdfcoError < StandardError; end
-
-  # Pdfco respondes with status of 200 even if there is an exception (most of the time)
-  class APIError < ::Pdfco::PdfcoError
-
-    attr_accessor :verbose_message, :status, :error_body
+  class PdfcoError < StandardError
+    attr_accessor :verbose_message, :status, :error_body, :headers, :body
 
     # Create a new API Error
     # @return the newly created APIError
-    def initialize(status, body)
-      @error_body = body
-      @status = status
+    def initialize(response)
+      @body = response.body
+      @status = response.status
+      @headers = response.headers
 
-      unless @error_body.nil? || @error_body.empty?
-        @verbose_message = error_body['message']
+      unless @body.nil? || @body.empty?
+        @verbose_message = @body['message']
       end
 
       super(@verbose_message)
@@ -28,7 +25,13 @@ module Pdfco
     end
   end
 
-  # A standard Error calss for Raising error if [cid, shared_secret, api_key] are not provided.
-  class AuthCredentialsError < ::Pdfco::PdfcoError; end
+  # A standard Error calss for Raising error if input parameters are bad [400]
+  class BadInputError < ::Pdfco::PdfcoError; end
+
+  # A standard Error calss for Raising error if user is not allowed to perform this action [401]
+  class UnAuthorizedError < ::Pdfco::PdfcoError; end
+
+  # A standard Error calss for Raising error if api user trying to access does not exist [404]
+  class MethodNotFoundError < ::Pdfco::PdfcoError; end
 
 end
