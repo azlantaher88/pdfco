@@ -6,7 +6,12 @@ module Pdfco
   class Server
 
     def self.method_missing(method, *args, &block)
-      endpoint = method.to_s.gsub('_', '/')
+      endpoint = "/"
+      endpoint << method.to_s.gsub('_', '/')
+
+      hyphenated_url = args.first.delete(:hyphenated_url) if args.first.is_a?(Hash)
+      endpoint << "/#{hyphenated_url}" if hyphenated_url
+
       self.request(endpoint, *args, &block)
     end
 
