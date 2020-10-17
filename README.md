@@ -43,7 +43,7 @@ Where **endpoint_url** is the URL you want to hit, **params** takes the body par
 
 **Note:** For **POST** request type, you don't need to specify request_verb parameter.
 
-```
+```ruby
 Pdfco::Server.pdf_find({
   "async": "false",
   "encrypt": "false",
@@ -74,7 +74,7 @@ Pdfco::Server.pdf_find({
 ```
 
 #### [POST] /pdf/split
-```
+```ruby
 Pdfco::Server.pdf_split({
   "url": "https://bytescout-com.s3.amazonaws.com/files/demo-files/cloud-api/pdf-split/sample.pdf",
   "pages": "1-2,3-",
@@ -101,7 +101,7 @@ Pdfco::Server.pdf_split({
 
 ### Make a GET Request to Pdfco API
 #### [GET] /file/upload/get-presigned-url?name=test.pdf&encrypt=true
-```
+```ruby
 Pdfco::Server.file_upload({hyphenated_url: 'get-presigned-url', name: 'test.pdf', encrypt: true}, :get)
 ```
 
@@ -120,7 +120,7 @@ Pdfco::Server.file_upload({hyphenated_url: 'get-presigned-url', name: 'test.pdf'
 }
 ```
 #### [GET] /file/upload/url?url=#{someurl}
-```
+```ruby
 Pdfco::Server.file_upload_url({url: 'https://bytescout-com.s3.amazonaws.com/files/demo-files/cloud-api/pdf-split/sample.pdf'}, :get)
 ```
 **Response** format
